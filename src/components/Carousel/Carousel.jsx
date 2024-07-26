@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
+import { ClipLoader} from 'react-spinners';
 import { fetchAllProducts } from '../../services/Products.js'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -36,6 +37,8 @@ const Carousel = () => {
 
     getAllProducts();
   }, []);
+
+  if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;
 
   return (
     <div className="carousel-container">

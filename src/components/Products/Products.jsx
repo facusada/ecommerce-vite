@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
+import { ClipLoader } from 'react-spinners';
+
 import { fetchAllProducts } from '../../services/Products.js'
 import Pagination from '../Pagination/Pagination.jsx';
 import './Products.sass'
@@ -45,7 +47,7 @@ const Products = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -77,7 +79,7 @@ const Products = () => {
       >
         {selectedProduct && (
           <div className="product-detail">
-            <button onClick={handleCloseModal} className="close-button">Close</button>
+            <button onClick={handleCloseModal} className="close-button">X</button>
             <img src={selectedProduct.image} alt={selectedProduct.title} />
             <h2>{selectedProduct.title}</h2>
             <p>{selectedProduct.description}</p>

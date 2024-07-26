@@ -23,7 +23,7 @@ const Navbar = () => (
             <NavLink className="nav-link" to="/products">Products</NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/contact">Contact</NavLink>
+            <NavLink className="nav-link" to="/create-product">Create Product</NavLink>
           </li>
         </ul>
       </div>
