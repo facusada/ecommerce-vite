@@ -1,11 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+//React
+import React, { useEffect, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
+//Material UI
 import { Modal, Box, Typography, Button, IconButton, Card, CardActions, CardContent, CardMedia } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
-
-
+// Services
 import { fetchAllProducts } from '../../services/Products.js'
+// Components
 import Pagination from '../Pagination/Pagination.jsx';
+//Styles
 import './Products.sass'
 
 const Products = () => {
@@ -66,6 +69,7 @@ const Products = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
+    setCount(1);
   };
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -81,7 +85,7 @@ const Products = () => {
     <div>
       <div className="products-container">
         {currentProducts.map(product => (
-          <Card sx={{ maxWidth: 345 }}>
+          <Card onClick={() => handleCardClick(product)} sx={{ maxWidth: 345 }}>
             <CardMedia
               component="img"
               height="140"
@@ -96,15 +100,9 @@ const Products = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Share</Button>
               <Button size="small">Learn More</Button>
             </CardActions>
           </Card>
-          // <div key={product.id} className="card" onClick={() => handleCardClick(product)}>
-          //   <img src={product.image} alt={product.title} />
-          //   <h2>{product.title}</h2>
-          //   <p className="price">${product.price}</p>
-          // </div>
         ))}
       </div>
 
@@ -148,56 +146,6 @@ const Products = () => {
           <Button onClick={handleCloseModal} sx={{ mt: 2 }}>Close</Button>
         </Box>
       </Modal> }
-
-      {/* {selectedProduct &&
-      <Dialog
-        open={isModalOpen}
-        onClose={handleCloseModal}
-        scroll={'paper'}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-        className='dialog-selected-product'
-      >
-        <Card sx={{ maxWidth: 400 }}>
-        <CardMedia
-          component="img"
-          height="500"
-          src={selectedProduct.image}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-      </Dialog>} */}
-
-      {/* <ReactModal
-        isOpen={isModalOpen}
-        onRequestClose={handleCloseModal}
-        contentLabel="Product Detail"
-        ariaHideApp={false}
-        className="modal"
-        overlayClassName="overlay"
-      >
-        {selectedProduct && (
-          <div className="product-detail">
-            <button onClick={handleCloseModal} className="close-button">X</button>
-            <img src={selectedProduct.image} alt={selectedProduct.title} />
-            <h2>{selectedProduct.title}</h2>
-            <p>{selectedProduct.description}</p>
-            <p className="price">${selectedProduct.price}</p>
-          </div>
-        )}
-      </ReactModal> */}
     </div>
   );
 };
