@@ -1,4 +1,4 @@
-# Coderhouse Platform Ecommerce Project
+# Coderhouse Platform - Ecommerce
 
 This project is an ecommerce application developed for the Coderhouse platform. The application is designed to provide typical ecommerce functionalities, allowing users to browse products, add items to the shopping cart, place orders, and more.
 
