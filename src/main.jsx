@@ -1,9 +1,15 @@
+// React
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+// Components
 import App from './App';
+// Context
+import { CartProvider } from './context/CartContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <CartProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </CartProvider>
 );

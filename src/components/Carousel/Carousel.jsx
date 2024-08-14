@@ -1,7 +1,10 @@
+// React
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import { ClipLoader} from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
+// Services
 import { fetchAllProducts } from '../../services/Products.js'
+// Styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Carousel.sass'
@@ -25,8 +28,8 @@ const Carousel = () => {
     const getAllProducts = async () => {
       try {
         setLoading(true);
-        const data = await fetchAllProducts();
-        const uploadImages = data.map(product => product.image)
+        const products = await fetchAllProducts();
+        const uploadImages = products.map(product => `/assets/${product.image}`)
         setImages(uploadImages);
       } catch (error) {
         setError(error.message);

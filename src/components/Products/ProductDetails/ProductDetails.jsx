@@ -1,6 +1,6 @@
 // React
 import React, { useEffect, useState} from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners';
 // Services
 import { fetchProductById } from '../../../services/Products.js';
@@ -9,14 +9,16 @@ import { Box, Card, CardContent, CardMedia, Typography, Button, IconButton } fro
 import { Add, Remove, ArrowBack } from '@mui/icons-material'
 // Styles
 import './ProductDetails.sass'
+// Context
+import { useCart } from '../../../context/CartContext';
 
 const ProductDetails = () => {
-  const { productId } = useParams();
+  const productId = useParams().productId;
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-
+  const { addToCart } = useCart();
   const navigate = useNavigate();
 
   const handleAdd = () => {
@@ -33,20 +35,25 @@ const ProductDetails = () => {
     navigate(-1);
   };
 
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product, quantity);
+    }
+  };
   
   useEffect(() => {
     const getProductDetails = async () => {
       try {
         setLoading(true);
-        const data = await fetchProductById(productId);
-        data.stock = 4
-        setProduct(data);
+        let productSelected = await fetchProductById(productId);
+
+        setProduct(productSelected);
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
-    };
+    }
     
     getProductDetails();
   }, []);
@@ -73,7 +80,7 @@ const ProductDetails = () => {
             className='card-media'
             component="img"
             height="inehrit"
-            image={product.image}
+            image={`/assets/${product.image}`}
             alt={product.title}
           />
           <CardContent>
@@ -98,7 +105,12 @@ const ProductDetails = () => {
               </IconButton>
             </Box>
             <Box className='actions'>
-              <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ marginTop: 2 }}
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </Button>
               <Button

@@ -1,4 +1,6 @@
+// React
 import React from 'react';
+// Styles
 import './Pagination.sass';
 
 const Pagination = ({ productsPerPage, totalProducts, paginate, currentPage }) => {

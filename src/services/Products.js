@@ -1,11 +1,18 @@
+// Firebase
+import { getDocs, collection } from 'firebase/firestore';
+// Database
+import db from '../db/db.js';
+
 const fetchAllProducts = async () => {
   try {
-    const response = await fetch('https://fakestoreapi.com/products');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
+    const productsRef = collection(db, 'products')
+    const dataDb = await getDocs(productsRef);
+    const productsDb = dataDb.docs.map((product) => {
+      return {
+        id: product.id, ...product.data()
+      }
+    })
+    return productsDb;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -13,64 +20,13 @@ const fetchAllProducts = async () => {
 
 const fetchProductById = async (productId) => {
   try {
-    const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+    const productsRef = collection(db, 'products');
+    const dataDb = await getDocs(productsRef);
+    const productSelected = dataDb.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .find(product => product.id === productId);
 
-const createProduct = async (productData) => {
-  try {
-    const response = await fetch('https://fakestoreapi.com/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(productData),
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-const updateProduct = async (productId, productData) => {
-  try {
-    const response = await fetch(`https://fakestoreapi.com/products/${productId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(productData),
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-const deleteProduct = async (productId) => {
-  try {
-    const response = await fetch(`https://fakestoreapi.com/products/${productId}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.status === 204; // 204 No Content
+    return productSelected
   } catch (error) {
     throw new Error(error.message);
   }
@@ -79,7 +35,4 @@ const deleteProduct = async (productId) => {
 export {
   fetchAllProducts,
   fetchProductById,
-  createProduct,
-  updateProduct,
-  deleteProduct,
 };

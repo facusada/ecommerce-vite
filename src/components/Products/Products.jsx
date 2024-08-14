@@ -13,6 +13,7 @@ import './Products.sass'
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,14 +27,19 @@ const Products = () => {
     const getAllProducts = async () => {
       try {
         setLoading(true);
-        const data = await fetchAllProducts();
-        setProducts(data);
+        let products = await fetchAllProducts();
+        const categories = products
+          .map(product => product.category)
+          .filter((category, index, self) => self.indexOf(category) === index);
+    
+        setCategories(categories);
+        setProducts(products);
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     getAllProducts();
   }, []);
@@ -72,7 +78,7 @@ const Products = () => {
         <Button onClick={handleShowCategories} variant="contained" color="primary">Category Filters</Button>
         { show &&
           <FormGroup row>
-            {["men's clothing", "women's clothing", "jewelery", "electronics"].map(category => (
+            {categories.map(category => (
               <FormControlLabel
                 control={<Checkbox checked={selectedCategories.includes(category)} onChange={handleCategoryChange} name={category} />}
                 label={category}
@@ -90,7 +96,7 @@ const Products = () => {
               <CardMedia
                 component="img"
                 height='none'
-                image={product.image}
+                image={`/assets/${product.image}`}
               />
             </CardContent>
             <CardContent>
