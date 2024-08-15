@@ -17,7 +17,7 @@ const Products = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(10);
+  const [productsPerPage] = useState(8);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [show, setShow] = useState(false);
 
