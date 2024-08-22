@@ -91,7 +91,7 @@ const Products = () => {
 
       <div className="products-container">
         {filteredProducts.map(product => (
-          <Card onClick={() => handleCardClick(product)} sx={{ maxWidth: 345 }}>
+          <Card key={product.id} onClick={() => handleCardClick(product)} sx={{ maxWidth: 345 }}>
             <CardContent>
               <CardMedia
                 component="img"

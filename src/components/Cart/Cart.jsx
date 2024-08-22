@@ -9,6 +9,7 @@ import { Box, Typography, Button, Dialog, DialogActions, DialogContent, DialogTi
 import DeleteIcon from '@mui/icons-material/Delete';
 // Styles
 import './Cart.sass';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const { cart, emptyCart, removeItem } = useCart();
@@ -71,6 +72,8 @@ const Cart = () => {
             className="checkout-button"
             variant="contained"
             disabled={cart.length === 0}
+            component={Link}
+            to="/checkout"
           >
             Checkout
           </Button>
@@ -105,7 +108,7 @@ const Cart = () => {
       <Dialog open={openEmptyCartConfirmation} onClose={handleCloseEmptyCart}>
         <DialogTitle>Confirm Action</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete the product?</Typography>
+          <Typography>Are you sure you want to delete all products in cart??</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseEmptyCart} color="primary">

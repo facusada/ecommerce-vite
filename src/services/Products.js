@@ -1,7 +1,7 @@
 // Firebase
-import { getDocs, collection } from 'firebase/firestore';
+import { doc, getDocs, collection, addDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 // Database
-import db from '../db/db.js';
+import { db } from '../db/db.js';
 
 const fetchAllProducts = async () => {
   try {
@@ -32,7 +32,16 @@ const fetchProductById = async (productId) => {
   }
 };
 
+const updateProductStock = async (productId, newStock) => {
+  const productRef = doc(db, 'products', productId);
+
+  await updateDoc(productRef, {
+    stock: newStock,
+  });
+};
+
 export {
   fetchAllProducts,
   fetchProductById,
+  updateProductStock
 };

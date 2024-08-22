@@ -37,6 +37,7 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (product) {
+      quantity > 1 ? setQuantity(1) : quantity
       addToCart(product, quantity);
     }
   };

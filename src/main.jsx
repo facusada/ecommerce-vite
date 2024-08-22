@@ -5,11 +5,14 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 // Context
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <CartProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </CartProvider>
+  <AuthProvider>
+    <CartProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </CartProvider>
+  </AuthProvider>
 );
