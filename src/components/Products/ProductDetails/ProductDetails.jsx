@@ -64,70 +64,91 @@ const ProductDetails = () => {
   if (error) return <div>Error: {error}</div>;
   
   return (
-    <div>
-      <Box
-        sx={{
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 2,
-          backgroundColor: '#f5f5f5',
-        }}
-      >
-        <Card className='container-card'>
-          <CardMedia
-            className='card-media'
-            component="img"
-            height="inehrit"
-            image={`/assets/${product.image}`}
-            alt={product.title}
-          />
-          <CardContent className='card-body'>
-            <Typography variant="h5" component="div">
-              {product.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.description}
-            </Typography>
-            <Typography variant="h6" component="div" sx={{ marginTop: 2 }}>
-              ${product.price}
-            </Typography>
-            <Box display="flex" alignItems="center">
-              <IconButton disabled={quantity <= 1} onClick={handleRemove}>
-                <Remove />
-              </IconButton>
-              <Typography variant="h6" sx={{ margin: '0 10px' }}>
-                {quantity}
-              </Typography>
-              <IconButton disabled={quantity >= product.stock} onClick={handleAdd}>
-                <Add />
-              </IconButton>
+    <Box
+      sx={{
+        width: '100vw',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 4,
+        backgroundColor: '#f5f5f5',
+      }}
+    >
+      <Card className='container-card' sx={{ maxWidth: 900, width: '80%', maxHeight: '80vh', overflow: 'auto' }}>
+        <CardMedia
+          className='card-media'
+          component="img"
+          height="auto"
+          image={`/assets/${product.image}`}
+          alt={product.title}
+          sx={{ objectFit: 'cover', maxHeight: '50vh' }}
+        />
+        <CardContent className='card-body' sx={{ padding: 3 }}>
+          <Typography variant="h5" component="div" gutterBottom>
+            {product.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            {product.description}
+          </Typography>
+          <Typography variant="h6" component="div" sx={{ marginTop: 2 }}>
+            ${product.price}
+          </Typography>
+          {product.stock > 0 ? (
+            <>
+              <Box display="flex" alignItems="center" sx={{ marginTop: 2 }}>
+                <IconButton disabled={quantity <= 1} onClick={handleRemove}>
+                  <Remove />
+                </IconButton>
+                <Typography variant="h6" sx={{ margin: '0 10px' }}>
+                  {quantity}
+                </Typography>
+                <IconButton disabled={quantity >= product.stock} onClick={handleAdd}>
+                  <Add />
+                </IconButton>
+              </Box>
+              <Box className='card-actions' sx={{ marginTop: 3 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </Button>
+                <Button
+                  startIcon={<ArrowBack />}
+                  onClick={goBack}
+                  variant="contained"
+                  color="secondary"
+                  sx={{ marginLeft: 2 }}
+                >
+                  Go Back
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <Box className="card-actions-without-stock">
+              <Box>
+                <Typography variant="h6" color="error">
+                  No stock available.
+                </Typography>
+              </Box>
+              <Box>
+                  <Button
+                    className='go-back-button'
+                    startIcon={<ArrowBack />}
+                    onClick={goBack}
+                    variant="contained"
+                    color="secondary"
+                    sx={{ marginLeft: 2 }}
+                  >
+                    Go Back
+                  </Button>
+              </Box>
             </Box>
-            <Box className='card-actions'>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ marginTop: 2 }}
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </Button>
-              <Button
-                startIcon={<ArrowBack />}
-                onClick={goBack}
-                variant="contained"
-                color="secondary"
-                sx={{ marginTop: 2, marginLeft: '10px' }}
-              >
-                Go Back
-              </Button>
-            </Box>
-          </CardContent>
-        </Card>
-      </Box>
-    </div>
+          )}
+        </CardContent>
+      </Card>
+    </Box>
   )
 }
 
