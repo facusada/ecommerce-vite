@@ -76,7 +76,7 @@ const ProductDetails = () => {
           backgroundColor: '#f5f5f5',
         }}
       >
-        <Card>
+        <Card className='container-card'>
           <CardMedia
             className='card-media'
             component="img"
@@ -84,7 +84,7 @@ const ProductDetails = () => {
             image={`/assets/${product.image}`}
             alt={product.title}
           />
-          <CardContent>
+          <CardContent className='card-body'>
             <Typography variant="h5" component="div">
               {product.title}
             </Typography>
@@ -105,7 +105,7 @@ const ProductDetails = () => {
                 <Add />
               </IconButton>
             </Box>
-            <Box className='actions'>
+            <Box className='card-actions'>
               <Button
                 variant="contained"
                 color="primary"

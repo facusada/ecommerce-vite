@@ -93,7 +93,7 @@ const Checkout = () => {
             <TextField
               required
               type='email'
-              label="email"
+              label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
