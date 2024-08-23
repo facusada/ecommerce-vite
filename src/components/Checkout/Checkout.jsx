@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+// Components
+import EmptyCart from '../Cart/EmptyCart/EmptyCart.jsx';
 // Context
 import { useCart } from '../../context/CartContext';
 // Material UI
@@ -77,7 +79,7 @@ const Checkout = () => {
       </Snackbar>
       <Typography variant='h2' className="checkout-header">Checkout</Typography>
       {cart.length === 0 ? (
-        <Typography>Your cart is empty. Add items to your cart before checking out.</Typography>
+        <EmptyCart />
       ) : (
         <>
         <form onSubmit={handleCheckout}>
