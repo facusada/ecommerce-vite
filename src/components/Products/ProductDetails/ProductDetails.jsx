@@ -87,9 +87,15 @@ const ProductDetails = () => {
           <Typography variant="h5" component="div" gutterBottom>
             {product.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary" paragraph>
-            {product.description}
-          </Typography>
+          <Box sx={{
+            maxHeight: '150px',
+            overflowY: 'auto',
+            marginBottom: 2,
+          }}>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              {product.description}
+            </Typography>
+          </Box>
           <Typography variant="h6" component="div" sx={{ marginTop: 2 }}>
             ${product.price}
           </Typography>
