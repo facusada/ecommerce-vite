@@ -52,13 +52,13 @@ const ProductDetails = () => {
         let productSelected = await fetchProductById(productId);
         
         if (!productSelected) {
-          setOpenModal(true);
+          navigate('/products/details/error', { replace: true });
           return;
         }
 
         setProduct(productSelected);
       } catch (error) {
-        setOpenModal(true);
+        setError(error.message);
       } finally {
         setLoading(false);
       }

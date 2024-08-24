@@ -1,37 +1,52 @@
-// React
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-// Material UI
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom'
+import { Typography, Button, Container } from '@mui/material';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-const ProductNotFoundModal = ({ open, onClose }) => {
+const ProductNotFound = ({ onRetry }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
-    onClose();
     navigate(-1);
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={goBack}
-      aria-labelledby="product-not-found-title"
-      aria-describedby="product-not-found-description"
+    <Container
+      maxWidth="sm"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        textAlign: 'center',
+        bgcolor: '#f5f5f5',
+        p: 3
+      }}
     >
-      <DialogTitle id="product-not-found-title">Product Not Found</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="product-not-found-description">
-          The product you are looking for does not exist or has been removed.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={goBack} color="primary">
-          Go Back
-        </Button>
-      </DialogActions>
-    </Dialog>
+      <ErrorOutlineIcon
+        sx={{
+          fontSize: 100,
+          color: '#f44336',
+          mb: 2
+        }}
+      />
+      <Typography variant="h4" component="h1" gutterBottom>
+        Product Not Found
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        The product you are looking for does not exist or is no longer available.
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={goBack}
+        sx={{ mt: 2 }}
+      >
+        Go Back
+      </Button>
+    </Container>
   );
 };
 
-export default ProductNotFoundModal;
+export default ProductNotFound;

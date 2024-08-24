@@ -11,6 +11,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Checkout from './components/Checkout/Checkout';
 import Orders from './components/Orders/Orders';
+import ProductNotFoundModal from './components/ProductNotFound/ProductNotFound';
 // Context
 import { useAuth } from './context/AuthContext';
 // Styles
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/" element={ <Home /> } />
           <Route path="/products" element={ <Products /> } />
           <Route path="/products/details/:productId" element={ <ProductDetails /> } />
+          <Route path="/products/details/error" element={ <ProductNotFoundModal /> } />
           <Route path="/cart" element={ <Cart /> } />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
