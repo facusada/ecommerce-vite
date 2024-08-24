@@ -4,8 +4,9 @@ This project is an ecommerce application developed for the Coderhouse platform. 
 
 ## Technologies Used
 
-- Frontend: React.js, Vite.js
-- Other technologies: Docker
+- Frontend: React.js, Vite.js, Material UI, Sass
+- Other technologies: Docker, Firebase
+- Deploy: Vercel
 
 ## Installation and Usage
 
