@@ -7,10 +7,12 @@ import { fetchProductById } from '../../../services/Products.js';
 // Material UI
 import { Box, Card, CardContent, CardMedia, Typography, Button, IconButton } from '@mui/material';
 import { Add, Remove, ArrowBack } from '@mui/icons-material'
-// Styles
-import './ProductDetails.sass'
+// Components
+import ProductNotFoundModal from '../../ProductNotFound/ProductNotFound.jsx';
 // Context
 import { useCart } from '../../../context/CartContext';
+// Styles
+import './ProductDetails.sass'
 
 const ProductDetails = () => {
   const productId = useParams().productId;
@@ -18,6 +20,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -47,6 +50,11 @@ const ProductDetails = () => {
       try {
         setLoading(true);
         let productSelected = await fetchProductById(productId);
+        
+        if (!productSelected) {
+          setOpenModal(true);
+          return;
+        }
 
         setProduct(productSelected);
       } catch (error) {
@@ -62,6 +70,7 @@ const ProductDetails = () => {
   
   if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;
   if (error) return <div>Error: {error}</div>;
+  if (openModal) return <ProductNotFoundModal open={openModal} onClose={() => setOpenModal(false)} />;
   
   return (
     <Box
@@ -87,12 +96,8 @@ const ProductDetails = () => {
           <Typography variant="h5" component="div" gutterBottom>
             {product.title}
           </Typography>
-          <Box sx={{
-            maxHeight: '150px',
-            overflowY: 'auto',
-            marginBottom: 2,
-          }}>
-            <Typography variant="body2" color="text.secondary" paragraph>
+          <Box>
+            <Typography variant="body2" className="card-description" color="text.secondary" paragraph>
               {product.description}
             </Typography>
           </Box>

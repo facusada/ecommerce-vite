@@ -29,8 +29,14 @@ const Login = () => {
 
       const dataLoginUser = await loginUser(email, password);
 
+      if (!dataLoginUser.success) {
+        handleClick('User not found', 'error')
+        return;
+      }
+
       login(dataLoginUser.user);
       handleClick('Login successfully', 'success');
+      navigate('/products')
     } catch (err) {
       handleClick('An error occurred. Please try again.', 'error');
     } finally {
@@ -46,7 +52,6 @@ const Login = () => {
   
   const handleClose = () => {
     setOpen(false);
-    navigate('/products')
   };
 
   if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;

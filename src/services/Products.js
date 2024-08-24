@@ -1,5 +1,5 @@
 // Firebase
-import { doc, getDocs, collection, addDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, getDocs, collection, updateDoc } from 'firebase/firestore';
 // Database
 import { db } from '../db/db.js';
 
