@@ -1,7 +1,6 @@
-// MyOrder.jsx
-
 // React
 import React, { useEffect, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
 // Firebase
 import { getUserOrders } from '../../services/Orders';
 // Material UI
@@ -34,7 +33,7 @@ const MyOrder = () => {
     }
   }, [user]);
 
-  if (loading) return <Typography>Loading...</Typography>;
+  if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;
   if (error) return <Typography>Error: {error}</Typography>;
 
   return (
