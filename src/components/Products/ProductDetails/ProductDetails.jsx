@@ -58,7 +58,7 @@ const ProductDetails = () => {
 
         setProduct(productSelected);
       } catch (error) {
-        setError(error.message);
+        setOpenModal(true);
       } finally {
         setLoading(false);
       }
