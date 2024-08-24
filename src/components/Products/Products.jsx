@@ -66,7 +66,9 @@ const Products = () => {
   };
 
   const handleShowCategories = () => {
-    setShow(!show);
+    if (categories.length > 0) {
+      setShow(!show);
+    }
   };
 
   if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;

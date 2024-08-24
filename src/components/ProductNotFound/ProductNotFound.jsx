@@ -15,7 +15,7 @@ const ProductNotFoundModal = ({ open, onClose }) => {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={goBack}
       aria-labelledby="product-not-found-title"
       aria-describedby="product-not-found-description"
     >
