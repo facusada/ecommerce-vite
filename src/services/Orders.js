@@ -1,5 +1,5 @@
 // Firebase
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 // Database
 import { db } from '../db/db.js';
 
@@ -23,6 +23,24 @@ const orderManager = async (cart, name, email) => {
   }
 };
 
+const getUserOrders = async (email) => {
+  try {
+    const ordersRef = collection(db, 'orders');
+    const q = query(ordersRef, where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+
+    const orders = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return orders;
+  } catch (error) {
+    throw new Error('Failed to fetch user orders: ' + error.message);
+  }
+};
+
 export {
   orderManager,
+  getUserOrders
 };

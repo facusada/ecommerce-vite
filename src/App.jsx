@@ -10,6 +10,7 @@ import Cart from './components/Cart/Cart';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Checkout from './components/Checkout/Checkout';
+import Orders from './components/Orders/Orders';
 // Context
 import { useAuth } from './context/AuthContext';
 // Styles
@@ -33,6 +34,10 @@ const App = () => {
           <Route
             path="/checkout"
             element={authContext.user.isAuthenticated ? <Checkout /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/orders"
+            element={authContext.user.isAuthenticated ? <Orders /> : <Navigate to="/login" />}
           />
         </Routes>
         </>
