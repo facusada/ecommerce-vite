@@ -1,5 +1,6 @@
 // React
 import React, { useState } from 'react'
+import { ClipLoader } from 'react-spinners';
 // Material UI
 import { Box, TextField, Button, Typography, Snackbar, Alert } from '@mui/material';
 // Services
@@ -18,6 +19,7 @@ const Register = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,9 +31,15 @@ const Register = () => {
   }
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
-      await createUser(formData);
+      const response = await createUser(formData);
+
+      if (response.success === false) {
+        handleClick(response.message, 'error');
+        return;
+      };
 
       setFormData({
         name: '',
@@ -40,9 +48,13 @@ const Register = () => {
         password: '',
         confirmPassword: '',
       });
+
       handleClick('Registration successful! You can now log in.', 'success');
+      return;
     } catch (err) {
       handleClick('An error occurred. Please try again.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,8 +66,9 @@ const Register = () => {
   
   const handleClose = () => {
     setOpen(false);
-    navigate('/products')
   };
+
+  if (loading) return <div className="loader-container"><ClipLoader color="#007bff" size={50} /></div>;
 
   return (
     <Box className="register-container" sx={{ padding: 3 }}>
@@ -66,7 +79,7 @@ const Register = () => {
         message={message}
       >
         <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-          {'Login successful!'}
+          {message}
         </Alert>
       </Snackbar>
       <Typography variant="h4" gutterBottom>Register</Typography>

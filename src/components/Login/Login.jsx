@@ -36,7 +36,6 @@ const Login = () => {
 
       login(dataLoginUser.user);
       handleClick('Login successfully', 'success');
-      navigate('/products')
     } catch (err) {
       handleClick('An error occurred. Please try again.', 'error');
     } finally {

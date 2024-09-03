@@ -1,8 +1,12 @@
 // Firebase
 import { doc, setDoc } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 // Database
 import { auth, db } from '../db/db.js'
+// Utils
+import { getIdToken } from '../utils/getIdToken.js';
+// Axios
+import axios from 'axios';
 
 const createUser = async (formData) => {
   try {
@@ -26,17 +30,28 @@ const createUser = async (formData) => {
 };
 
 const loginUser = async (email, password) => {
+  const url = import.meta.env.VITE_API_LOCAL_URL
+
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const idToken = await getIdToken(email, password)
 
-    const user = userCredential.user;
+    const response = await axios.post(`${url}/auth/login`, {
+      idToken
+    }, {
+      headers: {
+        'Authorization': `Bearer ${idToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
+    if (response.status === 200) {
+      const { token } = response.data;
+      localStorage.setItem('jwtToken', token);
+    } else {
+      throw new Error('Failed to login');
+    }
 
-    return { success: true, user };
+    return { success: true, user: response.data.userData.user };
   } catch (error) {
     return { success: false, message: error.message };
   }

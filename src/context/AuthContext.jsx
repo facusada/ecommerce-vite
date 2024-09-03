@@ -7,8 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
     uid: null,
     email: null,
-    accessToken: null,
-    refreshToken: null,
     isAuthenticated: false,
   });
 
@@ -16,8 +14,6 @@ export const AuthProvider = ({ children }) => {
     setUser({
       uid: userInfo.uid,
       email: userInfo.email,
-      accessToken: userInfo.stsTokenManager.accessToken,
-      refreshToken: userInfo.stsTokenManager.refreshToken,
       isAuthenticated: true,
     });
   };
@@ -26,8 +22,6 @@ export const AuthProvider = ({ children }) => {
     setUser({
       uid: null,
       email: null,
-      accessToken: null,
-      refreshToken: null,
       isAuthenticated: false,
     });
   };
